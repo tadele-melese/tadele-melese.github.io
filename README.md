@@ -1,2 +1,2 @@
 # tadele-melese.github.io
-This is my website
+This is my personal website
