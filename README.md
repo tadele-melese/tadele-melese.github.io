@@ -6,3 +6,6 @@ This is my personal website
 Additional gif image for the website
 
 ![](https://i.gifer.com/fxac.gif)
+
+### GEE Map
+![](https://raw.githubusercontent.com/gee-community/geemap/master/docs/assets/logo.png)
