@@ -3,6 +3,6 @@ This is my personal website
 
 ![](https://i.gifer.com/hEW.gif)
 
-Additional gif
+Additional gif image for the website
 
 ![](https://i.gifer.com/fxac.gif)
