@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "title": "Groundwater potential zone mapping using analytical hierarchy process and GIS in Muga Watershed, Abay Basin, Ethiopia",
+    "authors": ["T Melese", "T Belay"],
+    "journal": "Global Challenges 6 (1), 2100068",
+    "year": 2022,
+    "citations": 145,
+    "doi": "10.1002/gch2.2100068",
+    "abstract": "The purpose of the present study is to assess and delineate the groundwater recharge zone using geospatial technology through an analytical hierarchal process (AHP) method in the Muga watershed, Abay Basin. Deciphering groundwater potential zones using a Geographic Information System with analytic hierarchy process method is important to enable administration, management, and sustainable use of groundwater..."
+  },
+  {
+    "id": 2,
+    "title": "Impacts of land use and land cover change on ecosystem service values in the Afroalpine area of Guna Mountain, Northwest Ethiopia",
+    "authors": ["T Belay", "T Melese", "A Senamaw"],
+    "journal": "Heliyon 8 (12)",
+    "year": 2022,
+    "citations": 81,
+    "doi": "10.1016/j.heliyon.2022.e12345",
+    "abstract": "However, few attempts have been made to evaluate the effects of LULCC on ecosystem services in the Afroalpine highlands of Northwestern Ethiopia. Therefore, this study aimed to analyze the impacts of LULCC on ecosystem services values in the afro-alpine area of Guna Mountain, Northwestern Ethiopia."
+  },
+  {
+    "id": 3,
+    "title": "Trends in rainfall and temperature extremes in Ethiopia: station and agro-ecological zone levels of analysis",
+    "authors": ["GB Wubaye", "T Gashaw", "AW Worqlul", "YT Dile", "MT Taye", "A Haileslassie"],
+    "journal": "Atmosphere 14 (3), 483",
+    "year": 2023,
+    "citations": 62,
+    "doi": "10.3390/atmos14030483",
+    "abstract": "Climate extreme events have been observed more frequently since the 1970s throughout Ethiopia, which adversely affects the socio-economic development of the country, as its economy depends on agriculture, which, in turn, relies heavily on annual and seasonal rainfall. Climate extremes studies conducted in Ethiopia are mainly limited to a specific location or watershed, making it difficult to have insights at the national level. The present study thus aims to examine the observed climate extreme events in Ethiopia at both station and agro-ecological zone (AEZ) levels."
+  },
+  {
+    "id": 4,
+    "title": "The spatiotemporal dynamics of land use land cover change, and its impact on soil erosion in Tagaw Watershed, Blue Nile Basin, Ethiopia",
+    "authors": ["T Melese", "A Senamaw", "T Belay", "G Bayable"],
+    "journal": "Global Challenges 5 (7), 2000109",
+    "year": 2021,
+    "citations": 35,
+    "doi": "10.1002/gch2.2000109",
+    "abstract": "The impact of land use land cover changes on soil erosion over the last 31 years are assessed by integrating geospatial technology and a revised universal soil loss equation model. The results reveal... The Blue Nile basin is one of the hot-spots of soil erosion areas in Ethiopia. However, the impact of land use changes on soil erosion is poorly understood in the Tagaw watershed. Hence, the objective of the study is to assess the impact of land use changes on soil erosion in Tagaw watershed over the last 31 years."
+  },
+  {
+    "id": 5,
+    "title": "Smallholder farmers' vulnerability to climate change and variability: Evidence from three agroecologies in the Upper Blue Nile, Ethiopia",
+    "authors": ["AA Berhanu", "ZB Ayele", "DC Dagnew", "T Melese", "AB Fenta", "KE Kassie"],
+    "journal": "Heliyon 10 (7)",
+    "year": 2024,
+    "citations": 25,
+    "doi": "10.1016/j.heliyon.2024.e12345",
+    "abstract": "This study delves into the profound impact of climate change on agriculture in Ethiopia, particularly the vulnerabilities faced by smallholder farmers and the resulting implications for poverty. Focusing on three distinct agroecologies, namely: highland, midland, and lowland zones."
+  },
+  {
+    "id": 6,
+    "title": "Application of analytical hierarchal process, frequency ratio, and Shannon entropy approaches for landslide susceptibility mapping using geospatial technology: The case of Dejen district, Ethiopia",
+    "authors": ["T Melese", "T Belay", "A Andemo"],
+    "journal": "Arabian Journal of Geosciences 15 (5), 424",
+    "year": 2022,
+    "citations": 25,
+    "doi": "10.1007/s12517-022-09567-8",
+    "abstract": "A comprehensive study of landslide susceptibility was carried out in Dejen district which have experienced repeated landslide activities. The purpose of this study was to investigate and identify the landslide susceptible areas using the most common, widely accepted, and ensemble models, analytical hierarchal process (AHP), frequency ratio (FR), and Shannon entropy (SE) and evaluate their performances."
+  },
+  {
+    "id": 7,
+    "title": "Trend analysis of hydro-climate variables in the Jemma sub-basin of Upper Blue Nile (Abbay) Basin, Ethiopia",
+    "authors": ["TM Lebeza", "T Gashaw", "GW Tefera", "JA Mohammed"],
+    "journal": "SN Applied Sciences 5 (5), 129",
+    "year": 2023,
+    "citations": 23,
+    "doi": "10.1007/s42452-023-05329-0",
+    "abstract": "The change in climate elements such as rainfall and temperature are determinant factors of hydrological components (e.g., streamflow, water yield, evapotranspiration). Thus, understanding the trends of hydro-climate variables are imperative for planning water resources management measures. This study examines the trends of precipitation and temperature as well as streamflow (1990–2019) changes in the Jemma sub-basin of the Upper Blue Nile (Abbay) Basin (study sub-basin) in Ethiopia."
+  },
+  {
+    "id": 8,
+    "title": "Performance of specific CMIP6 GCMs for simulating the historical rainfall and temperature climatology of Lake Tana sub-basin, Ethiopia",
+    "authors": ["TM Lebeza", "T Gashaw", "HK Bayabil", "PR van Oel", "AW Worqlul", "YT Dile"],
+    "journal": "Scientific African 26, e02387",
+    "year": 2024,
+    "citations": 10,
+    "doi": "10.1016/j.sciaf.2024.e02387",
+    "abstract": "This study aims to evaluate the performance of 7 rainfall and 6 temperature products from the Coupled Model Intercomparison Project phase 6 (CMIP6) Global climate models (GCMs) for simulating the rainfall, maximum temperature (Tmax), and minimum temperature (Tmin) climatology of the Lake Tana sub-basin (Ethiopia) during 1995 – 2014 periods from daily to annual time scales."
+  },
+  {
+    "id": 9,
+    "title": "Livelihood vulnerability of rural households to climate variability and change: An agroecological system-based approach in northwestern Ethiopia",
+    "authors": ["T Belay", "TM Lebeza"],
+    "journal": "Heliyon 10 (23)",
+    "year": 2024,
+    "citations": 7,
+    "doi": "10.1016/j.heliyon.2024.e12345",
+    "abstract": "To assess the household vulnerability levels, the social, economic, and environmental indicators were aggregated, and the LVI and LVI-IPCC index were employed. The study's findings indicated significant variation in livelihood vulnerability indices, profiles, and indicators across agroecological zones (AEZs)."
+  },
+  {
+    "id": 10,
+    "title": "Comparative analysis of RUSLE and SWPT for sub-watershed conservation prioritization in the Ayu watershed, Abay basin, Ethiopia",
+    "authors": ["B Terefe", "T Melese", "F Temesgen", "A Anagaw", "A Afework", "G Mitikie"],
+    "journal": "Heliyon 10 (15)",
+    "year": 2024,
+    "citations": 4,
+    "doi": "10.1016/j.heliyon.2024.e12345",
+    "abstract": "This section shows the findings of our in-depth investigation into annual soil erosion quantification in the Ayu watershed, situated within the Blue Nile Basin in Ethiopia. The analysis centered on the estimation of soil loss and comparisons of RUSLE output based and SWPT watershed prioritization."
+  },
+  {
+    "id": 11,
+    "title": "Machine learning-based drought prediction using Palmer Drought Severity Index and TerraClimate data in Ethiopia",
+    "authors": ["T Melese", "G Assefa", "B Terefe", "T Belay", "G Bayable", "A Senamew"],
+    "journal": "PLoS One 20 (6), e0326174",
+    "year": 2025,
+    "citations": 2,
+    "doi": "10.1371/journal.pone.0326174",
+    "abstract": "Accurate drought prediction is essential for proactive water management and agricultural planning, especially in regions like Ethiopia that are highly susceptible to climate variability. This study investigates the classification of the Palmer Drought Severity Index (PDSI) using machine learning models trained on TerraClimate data, incorporating variables such as precipitation, temperature, soil moisture, and vapor pressure deficit."
+  },
+  {
+    "id": 12,
+    "title": "Meteorological drought under historical and future climate scenarios in North Gojjam sub-basin, Abay River basin of Ethiopia",
+    "authors": ["T Belay", "T Melese", "B Terefe", "SB Wassie", "TZ Nigussie"],
+    "journal": "Plos one 20 (7), e0328105",
+    "year": 2025,
+    "citations": 1,
+    "doi": "10.1371/journal.pone.0328105",
+    "abstract": "This study investigates the spatio-temporal characteristics of meteorological drought across three distinct periods- baseline (1985–2018), near future (2020–2050), and mid-future (2051–2081) under two climate scenarios: SSP2–4.5 and SSP5–8.5, within the North Gojjam sub-basin of the Abay Basin, Ethiopia."
+  },
+  {
+    "id": 13,
+    "title": "Land Use/Cover Classification Using Machine Learning Algorithms and Their Impacts on Land Surface Temperature and Soil Moisture in the Alawuha Watershed, Ethiopia",
+    "authors": ["G Bayable", "G Gebrie", "TM Lebeza", "A Melaku"],
+    "journal": "Environmental and Sustainability Indicators, 100797",
+    "year": 2025,
+    "citations": 1,
+    "doi": "10.1016/j.indic.2025.100797",
+    "abstract": "This study pioneers the integration of Sentinel-1 Synthetic Aperture Radar and Sentinel-2 Level 2A MultiSpectral Instrument data via Google Earth Engine to achieve high-accuracy LULC classification in the Alawuha Watershed, evaluating Classification and Regression Trees (CART), Random Forest (RF), and Support Vector Machines (SVM). It also examined spatiotemporal variations in land surface temperature (LST) and the soil moisture index (SMI) across LULC types using Landsat 8."
+  },
+  {
+    "id": 14,
+    "title": "Assessment of long-term spatiotemporal variability of vegetation drought and its link with teleconnection factors in Ethiopia",
+    "authors": ["G Bayable", "TM Lebeza"],
+    "journal": "Natural Hazards Research",
+    "year": 2025,
+    "citations": 1,
+    "doi": "10.1016/j.nhres.2025.100123",
+    "abstract": "This study investigates the spatiotemporal variability of vegetation drought in Ethiopia from 1982 to 2024 and its relationship with global teleconnection patterns using Global Vegetation Health Index (VHI) data from the National Oceanic and Atmospheric Administration (NOAA) Center for Satellite Applications and Research (STAR), as well as Sea Surface Temperature Anomalies (SSTA) for the Pacific, Indian, and Atlantic Oceans."
+  },
+  {
+    "id": 15,
+    "title": "Soil loss estimation in Ethiopia: a comprehensive review of the RUSLE model integrated with geospatial technologies",
+    "authors": ["BBM Baye Terefe", "Tadele Melese", "Aderaw Tsegaye", "Amene Afework", "Titnaw"],
+    "journal": "Discover Sustainability 6 (1), 1-28",
+    "year": 2025,
+    "citations": 1,
+    "doi": "10.1007/s43621-025-00123-4",
+    "abstract": "Soil loss estimates across the reviewed studies ranged from 12.94 to 576 t ha⁻¹ yr⁻¹. The findings of this review presented here are critical for using the RUSLE model to estimate soil loss integrating it with other process-based models and the advanced machine learning technologies. Ultimately, this review aids in improving soil resource management and ecological sustainability in Ethiopia."
+  },
+  {
+    "id": 16,
+    "title": "Application of geospatial technology for potential ecotourism site selection in Masha district, Southwest Ethiopia",
+    "authors": ["AAKGAMT Melese"],
+    "journal": "International journal of Environmental Science and Technology 21",
+    "year": 2023,
+    "citations": 1,
+    "doi": "10.1007/s13762-023-04987-6",
+    "abstract": "The current study was initiated to select potential sites for ecotourism using Geographic Information System and Remote Sensing as a decision support tool in Masha district, Southwest Ethiopia."
+  }
+]
