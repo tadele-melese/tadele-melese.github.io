@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tadele Melese Lebeza - World-Class GeoAI Portfolio</title>
+  <meta name="description" content="Tadele Melese Lebeza – Data Scientist, Lecturer & GeoAI Researcher specializing in GIS, Remote Sensing, Climate & Hydrologic Modeling, and Interactive Web Visualization." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          animation: { 'fade-in': 'fadeIn 0.8s ease-out forwards', 'float': 'float 6s ease-in-out infinite' },
+          keyframes: {
+            fadeIn: { '0%': { opacity: 0, transform: 'translateY(20px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-15px)' } }
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          },
+          animation: {
+            'pulse-slow': 'pulse 6s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'gradient': 'gradient 12s ease infinite',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'slide-up': 'slide-up 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'rotate-slow': 'rotate 20s linear infinite',
+            'bounce-slow': 'bounce 3s infinite'
+          },
+          keyframes: {
+            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+            gradient: { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
+            sparkle: { '0%, 100%': { opacity: 0.6 }, '50%': { opacity: 1 } },
+            'slide-up': { '0%': { transform: 'translateY(30px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+            glow: { '0%': { boxShadow: '0 0 20px rgba(6, 182, 212, 0.3)' }, '100%': { boxShadow: '0 0 40px rgba(6, 182, 212, 0.6)' } },
+            rotate: { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } }
+          },
+          backdropBlur: { xs: '2px' },
+          boxShadow: {
+            'neon': '0 0 30px rgba(6, 182, 212, 0.5), 0 0 60px rgba(139, 92, 246, 0.3)',
+            'card': '0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 182, 212, 0.1)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --cyan: #06b6d4;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --orange: #f97316;
+    }
+    .pub-tag { @apply px-3 py-1 rounded-full text-xs font-bold transition-all hover:scale-110 shadow-md; }
+    .project-card { 
+      backdrop-filter: blur(20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; 
+      @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+      z-index: -1;
+    }
+    .project-card:hover::before { @apply opacity-100; }
+    .project-card:hover { 
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--tw-shadow-neon);
+    }
+    .gradient-border { 
+      @apply relative overflow-hidden rounded-3xl;
+    }
+    .gradient-border::before {
+      content: ''; 
+      @apply absolute inset-0 -m-px rounded-3xl pointer-events-none;
+      background: linear-gradient(45deg, var(--cyan), var(--blue), var(--purple), var(--pink), var(--emerald));
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      z-index: -1;
+    }
+    .particle { 
+      @apply absolute rounded-full bg-gradient-to-br opacity-20 animate-pulse-slow blur-xl;
+    }
+    .live-badge {
+      @apply absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold animate-pulse;
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    }
+    .demo-modal {
+      @apply fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center p-4 transition-opacity;
+      opacity: 0; pointer-events: none;
+    }
+    .demo-modal.open { opacity: 1; pointer-events: auto; }
+    .demo-frame {
+      @apply w-full max-w-6xl h-96 md:h-screen max-h-screen rounded-2xl overflow-hidden shadow-2xl;
+      animation: slide-up 0.6s ease;
+    }
+    .globe-container {
+      @apply relative w-64 h-64 mx-auto;
+    }
+    .globe {
+      @apply absolute inset-0 rounded-full border-4 border-cyan-500/30;
+      background: radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.2), transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.2), transparent 50%);
+      animation: rotate-slow 20s linear infinite;
+    }
+    .metric-card { 
+      @apply transition-all duration-700 transform hover:scale-110 hover:rotate-3;
+      box-shadow: var(--tw-shadow-card);
+      
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 text-white min-h-screen font-sans overflow-x-hidden">
+
+  <!-- Floating Particles -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="particle top-10 left-10 w-96 h-96 from-cyan-500/30 to-blue-600/20"></div>
+    <div class="particle bottom-20 right-20 w-80 h-80 from-purple-600/30 to-pink-600/20 delay-1000"></div>
+    <div class="particle top-1/2 left-1/2 w-72 h-72 from-emerald-500/30 to-cyan-600/20 -translate-x-1/2 -translate-y-1/2 delay-700"></div>
+    <div class="particle top-32 right-40 w-64 h-64 from-orange-500/20 to-amber-600/20 blur-3xl"></div>
+  </div>
+
+  <!-- Hero Header
+  <section class="py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 text-center">
+      <div class="globe-container mb-8" data-aos="fade-down">
+        <div class="globe"></div>
+        <i data-lucide="globe" class="absolute inset-0 m-auto w-32 h-32 text-cyan-400 opacity-70"></i>
+      </div>
+      <h1 class="text-6xl md:text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-600 animate-pulse leading-tight">
+        Tadele Melese Lebeza
+      </h1>
+      <p class="mt-4 text-2xl md:text-3xl text-cyan-300 font-display">Founder & CEO, <span class="text-emerald-400">GeoAgriVision</span></p>
+      <p class="mt-6 text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+        <strong>15 Q1 Publications</strong> • <strong>h-index: 7</strong> • <strong>420+ Citations</strong> • <strong>389.8 Research Interest</strong>
+      </p>
+      <div class="mt-8 flex justify-center gap-6 flex-wrap">
+        <a href="https://geoagrivision.netlify.app" target="_blank" class="bg-gradient-to-r from-emerald-500 to-cyan-600 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all flex items-center gap-3">
+          <i data-lucide="rocket" class="w-6 h-6"></i> Visit GeoAgriVision
+        </a>
+        <a href="https://scholar.google.com/citations?user=EXMML4sAAAAJ&hl=en" target="_blank" class="bg-gray-800 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all flex items-center gap-3">
+          <i data-lucide="graduation-cap" class="w-6 h-6"></i> Google Scholar
+        </a>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #0D1117;
+      --primary-accent: #00C4CC;
+      --secondary-accent: #3B82F6;
+      --text-color: #F0F4F8;
+      --card-bg: #161B22;
+      --gradient-1: linear-gradient(135deg, #00C4CC, #3B82F6);
+      --gradient-2: linear-gradient(135deg, #8B5CF6, #EC4899);
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); }
+    ::-webkit-scrollbar-thumb { background: var(--primary-accent); border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00e6f0; }
+
+    /* Glassmorphism Nav */
+    nav {
+      background: rgba(13, 17, 23, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 196, 204, 0.15);
+      z-index: 1000;
+    }
+
+    /* Hero Background Animation */
+    .hero-bg {
+      background: radial-gradient(circle at 20% 80%, rgba(0, 196, 204, 0.2), transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 50%),
+                  var(--bg-color);
+      animation: pulse 12s infinite alternate;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+
+    /* Interactive Cards */
+    .card {
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 196, 204, 0.3);
+      border-color: var(--primary-accent);
+    }
+
+    /* Typing Animation */
+    .typing {
+      overflow: hidden;
+      border-right: 3px solid var(--primary-accent);
+      white-space: nowrap;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: var(--primary-accent); }
+    }
+
+    /* Particle Background */
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      z-index: 0;
+    }
+    #rotating-title { 
+     min-width: 280px; 
+     display: inline-block; 
+     }
+
+    /* Section Divider */
+    .section-divider {
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
+      margin: 3rem 0;
+    }
+
+    /* Skill Progress Bars */
+    .skill-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .skill-progress {
+      height: 100%;
+      background: var(--gradient-1);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.5s ease-out;
+    }
+    
+
+    /* Publication Tags */
+    .pub-tag {
+      @apply px-3 py-1 rounded-full text-xs font-semibold transition;
+    }
+
+    /* Form Glow */
+    input:focus, textarea:focus {
+      box-shadow: 0 0 0 3px rgba(0, 196, 204, 0.3);
+    }
+
+    /* Back to Top */
+    #backToTopBtn {
+      background: var(--primary-accent);
+      box-shadow: 0 4px 20px rgba(0, 196, 204, 0.4);
+    }
+    #backToTopBtn:hover {
+      background: #00e6f0;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Sticky Navigation -->
+  <nav class="sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16">
+      <a href="#home" class="text-2xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent hover:from-white hover:to-cyan-300 transition-all duration-300">
+        T.M. Lebeza
+      </a>
+      <ul class="hidden md:flex space-x-8 uppercase tracking-widest font-bold text-gray-300 text-sm">
+        <li><a href="#home" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="#about" class="hover:text-cyan-400 transition">About</a></li>
+        <li><a href="#skills" class="hover:text-cyan-400 transition">Expertise</a></li>
+        <li><a href="#experience" class="hover:text-cyan-400 transition">Journey</a></li>
+        <li><a href="#projects" class="hover:text-cyan-400 transition">Projects</a></li>
+        <li><a href="#publications" class="hover:text-cyan-400 transition">Research</a></li>
+        <li><a href="#references" class="hover:text-cyan-400 transition">References</a></li>
+        <li><a href="#contact" class="hover:text-cyan-400 transition">Contact</a></li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-toggle" aria-label="Toggle Menu" class="md:hidden text-cyan-400 hover:text-white p-2">
+        <i data-lucide="menu" class="w-7 h-7"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-gray-900/95 backdrop-blur-lg px-6 py-4 border-t border-gray-1½">
+      <a href="#home" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Home</a>
+      <a href="#about" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">About</a>
+      <a href="#skills" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Expertise</a>
+      <a href="#experience" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Journey</a>
+      <a href="#projects" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Projects</a>
+      <a href="#publications" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Research</a>
+       <a href="#references" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">References</a>
+      <a href="#contact" class="block py-3 text-lg font-semibold text-gray-300 hover:text-cyan-400">Contact</a>
+    </div>
+  </nav>
+
+<!-- HERO SECTION – CV DOWNLOAD + ONE-LINE SOCIALS + WORLD-CLASS VISIBILITY -->
+<section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-28 z-10">
+  <!-- Animated Gradient Background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-emerald-950"></div>
+  <div class="absolute inset-0 bg-gradient-to-tl from-cyan-900/25 via-transparent to-amber-900/15"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_15%_85%,rgba(6,182,212,0.18),transparent_50%),radial-gradient(circle_at_85%_15%,rgba(34,197,94,0.12),transparent_50%)]"></div>
+
+  <!-- Floating Particles -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="particle top-12 left-8 w-80 h-80 from-cyan-500/25 to-blue-600/10 animate-pulse blur-xl"></div>
+    <div class="particle bottom-16 right-12 w-72 h-72 from-emerald-600/25 to-teal-600/10 animate-pulse delay-1000 blur-xl"></div>
+    <div class="particle top-1/2 left-1/2 w-64 h-64 from-amber-500/20 to-orange-600/10 -translate-x-1/2 -translate-y-1/2 delay-700 blur-2xl"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-8 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center z-10">
+    
+    <!-- LEFT: TEXT & ACTIONS -->
+    <div class="text-center lg:text-left space-y-6" data-aos="fade-up" data-aos-delay="100">
+      
+      <!-- Name – Large & Impactful -->
+<h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-white">
+  Tadele Melese 
+  <span class="bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-500 bg-clip-text text-transparent animate-pulse">
+    Lebeza
+  </span>
+</h1>
+
+<!-- HERO SUMMARY – SHORT, VIBRANT, HYDRO-CLIMATE FOCUSED -->
+<div class="mt-8 space-y-7 text-center lg:text-left">
+
+  <!-- Dynamic Rotating Titles – Now Water & Land Focused -->
+  <p class="text-2xl md:text-3xl lg:text-4xl text-red-500 font-bold h-13">
+    <span id="rotating-title" class="inline-block transition-opacity duration-500"></span>
+    <span class="inline-block w-1 h-10 bg-cyan-400 animate-blink ml-2"></span>
+  </p>
+
+  <!-- One-Line Academic Impact -->
+  <div class="text-lg md:text-xl font-medium text-gray-200 leading-tight">
+    <span>• Lecturer • </span><span class="text-emerald-400">Researcher</span>
+    <span class="text-gray-500 mx-2">•</span>
+     <span>Bahir Dar University  </span>
+    <!-- <span class="text-amber-400">Soka University, Japan</span>
+    <span class="text-gray-500 mx-2">•</span> -->
+    <!-- <span class="text-cyan-300">16 Q1 Papers • 420+ Citations • h-index 7</span> -->
+  </div>
+
+  <!-- GeoAgriVision Founder Badge – Premium -->
+  <div class="inline-flex items-center gap-4 bg-gradient-to-r from-emerald-500 via-cyan-500 to-teal-600 text-white px-8 py-4 rounded-full shadow-2xl animate-pulse hover:animate-none transform hover:scale-105 transition-all group cursor-pointer border-2 border-white/20"
+       onclick="window.open('https://geoagrivision.netlify.app', '_blank')">
+    <i  class="w-8 h-8 group-hover:rotate-12 transition"></i>
+    <span class="font-bold text-lg tracking-wide">Founder & CEO → GeoAgriVision</span>
+    <i data-lucide="external-link" class="w-6 h-6 opacity-80 group-hover:opacity-100"></i>
+  </div>
+
+  <!-- Core Expertise Tags – 3 Punchy, Accurate, Water-Focused
+  <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-6">
+    <span class="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-600/20 border border-cyan-400 text-cyan-300 font-bold text-sm backdrop-blur-sm shadow-md">
+      GeoAI & Hydro-Climate
+    </span>
+    <span class="px-6 py-3 rounded-full bg-gradient-to-r from-orange-500/20 to-red-600/20 border border-orange-400 text-orange-300 font-bold text-sm backdrop-blur-sm shadow-md">
+      Land Degradation
+    </span>
+    <span class="px-6 py-3 rounded-full bg-gradient-to-r from-rose-500/20 to-pink-600/20 border border-rose-400 text-rose-300 font-bold text-sm backdrop-blur-sm shadow-md">
+      Drought Prediction 
+    </span>
+  </div> -->
+
+</div>
+
+
+
+      <!-- SOCIAL ICONS – ONE LINE, PERFECTLY SPACED -->
+       
+      <div class="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-3 mt-8 text-sm font-medium">
+        <a href="mailto:tadelemelese21@gmail.com" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 hover:bg-cyan-500/20 hover:border-cyan-400 transition-all backdrop-blur-sm">
+          <i data-lucide="mail" class="w-3 h-3 text-cyan-400 group-hover:text-white"></i>
+          <span class="text-cyan-300 group-hover:text-white">Email</span>
+        </a>
+        <a href="https://orcid.org/0000-0002-4627-8193" target="_blank" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500/10 border border-orange-500/40 hover:bg-orange-500/20 hover:border-orange-400 transition-all backdrop-blur-sm">
+          <i data-lucide="orcid" class="w-3 h-3 text-orange-400 group-hover:text-white"></i>
+          <span class="text-orange-300 group-hover:text-white">ORCID</span>
+        </a>
+        <a href="https://github.com/tadele-melese" target="_blank" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500/10 border border-blue-500/40 hover:bg-blue-500/20 hover:border-blue-400 transition-all backdrop-blur-sm">
+          <i data-lucide="github" class="w-5 h-5 text-blue-400 group-hover:text-white"></i>
+          <span class="text-blue-300 group-hover:text-white">GitHub</span>
+        </a>
+        <a href="https://www.linkedin.com/in/tadele-melese-lebeza-7a45961ba" target="_blank" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-sky-500/10 border border-sky-500/40 hover:bg-sky-500/20 hover:border-sky-400 transition-all backdrop-blur-sm">
+          <i data-lucide="linkedin" class="w-5 h-5 text-sky-400 group-hover:text-white"></i>
+          <span class="text-sky-300 group-hover:text-white">LinkedIn</span>
+        </a>
+        <a href="https://scholar.google.com/citations?user=EXMML4sAAAAJ&hl=en" target="_blank" class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/40 hover:bg-green-500/20 hover:border-green-400 transition-all backdrop-blur-sm">
+          <i data-lucide="graduation-cap" class="w-5 h-5 text-green-400 group-hover:text-white"></i>
+          <span class="text-green-300 group-hover:text-white">Google Scholar</span>
+        </a>
+      </div>
+
+      <!-- CTA + CV DOWNLOAD BUTTONS -->
+      <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
+        <!-- CV Download Button -->
+        <a href="public/data/Tadele_Melese_Lebeza_CV.pdf" download 
+           class="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl hover:shadow-amber-500/50 transform hover:scale-105 transition-all flex items-center gap-3 text-lg">
+          <i data-lucide="download" class="w-6 h-6 group-hover:translate-y-1 transition"></i>
+          <span>Download CV</span>
+          <div class="absolute inset-0 bg-white/20 translate-x-[-110%] group-hover:translate-x-0 transition-transform duration-500"></div>
+        </a>
+
+        <!-- View Research -->
+        <a href="#contact" class="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-emerald-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl hover:shadow-cyan-500/50 transform hover:scale-105 transition-all flex items-center gap-3 text-lg">
+          <span>Hire Me</span>
+          <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition"></i>
+          <div class="absolute inset-0 bg-white/20 translate-x-[-110%] group-hover:translate-x-0 transition-transform duration-500"></div>
+        </a>
+        <!-- Collaborate
+        <a href="#contact" class="border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white font-bold py-4 px-8 rounded-full transition-all backdrop-blur-sm text-lg">
+          Collaborate
+        </a> -->
+      </div>
+    </div>
+
+    <!-- RIGHT: MODERATED PHOTO + 3D GLOBE -->
+    <div class="relative flex justify-center lg:justify-end" data-aos="fade-up" data-aos-delay="300">
+      <!-- 3D Globe Background -->
+      <div class="globe-container w-full max-w-md h-80 lg:h-96 mx-auto">
+        <div class="globe"></div>
+        <!-- Research Hotspots: Ethiopia (Red), Japan (Yellow) -->
+        <div class="absolute top-1/3 left-1/4 w-4 h-4 bg-red-500 rounded-full animate-ping"></div>
+        <div class="absolute top-1/3 left-1/4 w-4 h-4 bg-red-500 rounded-full"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-4 h-4 bg-yellow-500 rounded-full animate-ping delay-700"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-4 h-4 bg-yellow-500 rounded-full"></div>
+      </div>
+
+      <!-- MODERATED PHOTO – Perfect Size -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-8 border-cyan-500/50 shadow-2xl backdrop-blur-sm animate-float-slow">
+          <img 
+            src="tadele.jpg" 
+            alt="Tadele Melese Lebeza – GeoAI & Land Degradation Expert" 
+            class="w-full h-full object-cover object-top"
+            loading="lazy"
+          />
+          <!-- Subtle Glow -->
+          <div class="absolute inset-0 rounded-full bg-gradient-to-t from-emerald-500/30 to-transparent opacity-40"></div>
+        </div>
+      </div>
+
+      <!-- Live Badge -->
+      <!-- <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-cyan-600 text-white px-6 py-3 rounded-full text-sm font-bold shadow-2xl animate-pulse flex items-center gap-2">
+        <i data-lucide="zap" class="w-5 h-5"></i>
+        <span>Leading Land Degradation Solutions</span>
+      </div> -->
+    </div>
+  </div>
+
+ <!-- PREMIUM DOUBLE CHEVRON – SMOOTH SCROLL ON CLICK -->
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer group"
+     onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">
+  <div class="flex flex-col items-center gap-1 animate-bounce group-hover:animate-none">
+    <i data-lucide="chevron-down" class="w-9 h-9 text-cyan-400 group-hover:text-white transition"></i>
+    <i data-lucide="chevron-down" class="w-9 h-9 text-cyan-400 group-hover:text-white transition animation-delay-200"></i>
+  </div>
+  <span class="text-xs text-cyan-300 mt-2 opacity-0 group-hover:opacity-100 transition hidden lg:block">
+    Discover More
+  </span>
+</div>
+</section>
+
+
+<!-- ABOUT ME SECTION – WORLD-CLASS, PRECISE, IMPACTFUL -->
+<section id="about" class="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-slate-950 via-blue-950 to-emerald-950">
+  <!-- Background Glow -->
+  <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/20 via-transparent to-cyan-900/10"></div>
+  <div class="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-20 right-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-8 z-10">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-5xl md:text-6xl font-extrabold">
+        <span class="bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-500 bg-clip-text text-transparent">
+          About Me
+        </span>
+      </h2>
+<p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto font-bold tracking-tight">
+  Unleashing GeoAI Revolution • Engineering Hydro-Climate Breakthroughs • Lecturing • Igniting GeoAgriVision • Shattering Land Degradation Blind Spots
+</p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10 lg:gap-12 items-start">
+      
+      <!-- MAIN BIO -->
+      <div class="lg:col-span-2 space-y-8" data-aos="fade-up" data-aos-delay="100">
+        <div class="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-8 shadow-2xl">
+          <h3 class="text-2xl font-bold text-cyan-300 mb-4 flex items-center gap-3">
+            <i data-lucide="user" class="w-7 h-7"></i> Tadele Melese Lebeza
+          </h3>
+          <p class="text-gray-300 leading-relaxed text-lg">
+            I am a <strong class="text-emerald-400">Lecturer and Researcher</strong> in the Department of Natural Resource Management at 
+            <strong class="text-emerald-400">Bahir Dar University</strong>, Ethiopia. With a <strong class="text-amber-400">MEXT Scholarship</strong>, 
+            I earned my <strong>MSc in Information Systems Science</strong> from <strong>Soka University, Japan</strong> (2023–2025), 
+            building on my <strong>MSc in GIS and Remote Sensing</strong> from Mekelle University (2017) and 
+            <strong>BSc in Geography and Environmental Studies</strong> from Wolaita Sodo University (2010).
+          </p>
+          <p class="mt-4 text-gray-300 leading-relaxed text-lg">
+            As <strong class="text-yellow-400">Founder & CEO of GeoAgriVision</strong>, I lead an innovative platform integrating 
+            <strong>GeoAI, satellite intelligence, and machine learning</strong> to deliver real-time insights for drought prediction, 
+            land degradation monitoring, and climate-resilient agriculture across the Horn of Africa.
+          </p>
+          <p class="mt-4 text-gray-300 leading-relaxed text-lg">
+            My research bridges <strong>geospatial analysis, deep learning, and hydrological modeling</strong> to address 
+            pressing environmental challenges from soil erosion in Ethiopia’s highlands to vegetation shifts under climate stress. 
+            I have authored <strong class="text-green-400">17  peer-reviewed publications</strong> with <strong class="text-green-400">445+ citations</strong> 
+            and an <strong class="text-green-400">h-index of 9</strong>, contributing to global efforts in sustainable land and water management.
+          </p>
+        </div>
+
+        <!-- RESEARCH INTERESTS -->
+        <div class="bg-slate-900/60 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 shadow-2xl">
+          <h3 class="text-2xl font-bold text-emerald-300 mb-6 flex items-center gap-3">
+            <i data-lucide="target" class="w-7 h-7"></i> Research Interests
+          </h3>
+          <ul class="grid md:grid-cols-2 gap-4 text-gray-300">
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Remote sensing & geospatial analysis (LiDAR, satellite imagery)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Climate change impacts on water resources & drought prediction</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Land use/cover dynamics, soil erosion, and forest change</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Application of ML in ecological & environmental modeling</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Spatiotemporal modeling of vegetation-climate-hydrology interactions</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+              <span>Precision agriculture & food security in vulnerable ecosystems</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- AFFILIATIONS & AWARDS -->
+        <div class="bg-slate-900/60 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-8 shadow-2xl">
+          <h3 class="text-2xl font-bold text-amber-300 mb-6 flex items-center gap-3">
+            <i data-lucide="award" class="w-7 h-7"></i> Awards & Affiliations
+          </h3>
+          <ul class="space-y-4 text-gray-300">
+            <li class="flex items-start gap-3">
+              <i data-lucide="trophy" class="w-6 h-6 text-amber-400 mt-0.5"></i>
+              <div>
+                <strong>MEXT Scholarship</strong> – Full funding for MSc in Information Systems Science, 
+                Soka University, Japan (2023)
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="users" class="w-6 h-6 text-amber-400 mt-0.5"></i>
+              <div>
+                <strong>SATREPS EARTH Project Member</strong> – Japan-Ethiopia collaboration on environmental 
+                and agricultural research (2023–Present)
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="globe" class="w-6 h-6 text-amber-400 mt-0.5"></i>
+              <div>
+                <strong>Founder & CEO, GeoAgriVision</strong> – Interactive GeoAI platform for climate 
+                and agricultural intelligence
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SIDEBAR: QUICK STATS + LINKS -->
+      <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
+        <!-- Academic Impact -->
+        <div class="bg-gradient-to-br from-cyan-600/20 to-emerald-600/20 backdrop-blur-xl border border-cyan-500/40 rounded-2xl p-6 shadow-xl">
+          <h4 class="text-xl font-bold text-cyan-300 mb-4">Academic Impact</h4>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Publications</span>
+              <span class="font-bold text-white">17</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">h-index</span>
+              <span class="font-bold text-white">9</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">i10-index</span>
+              <span class="font-bold text-white">9</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Citations</span>
+              <span class="font-bold text-green-400">450+</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Q1 Papers</span>
+              <span class="font-bold text-amber-400">14</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Links -->
+        <div class="bg-slate-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-6 shadow-xl">
+          <h4 class="text-xl font-bold text-gray-200 mb-4">Connect</h4>
+          <div class="space-y-3 text-sm">
+            <a href="mailto:tadelemelese21@gmail.com" class="flex items-center gap-2 text-cyan-400 hover:text-white transition">
+              <i data-lucide="mail" class="w-5 h-5"></i> tadelemelese21@gmail.com
+            </a>
+            <a href="tel:+251918304306" class="flex items-center gap-2 text-emerald-400 hover:text-white transition">
+              <i data-lucide="phone" class="w-5 h-5"></i> +251 918 304 306
+            </a>
+            <a href="https://scholar.google.com/citations?user=EXMML4sAAAAJ&hl=en" target="_blank" class="flex items-center gap-2 text-green-400 hover:text-white transition">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i> Google Scholar
+            </a>
+            <a href="https://github.com/tadele-melese" target="_blank" class="flex items-center gap-2 text-blue-400 hover:text-white transition">
+              <i data-lucide="github" class="w-5 h-5"></i> GitHub
+            </a>
+            <a href="https://www.researchgate.net/profile/Tadele-Melese" target="_blank" class="flex items-center gap-2 text-purple-400 hover:text-white transition">
+              <i data-lucide="book-open" class="w-5 h-5"></i> ResearchGate
+            </a>
+            <a href="https://www.linkedin.com/in/tadele-melese-lebeza-7a45961ba" target="_blank" class="flex items-center gap-2 text-sky-400 hover:text-white transition">
+              <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
+            </a>
+            <a href="https://orcid.org/0000-0002-1930-1306" target="_blank" class="flex items-center gap-2 text-orange-400 hover:text-white transition">
+              <i data-lucide="orcid" class="w-5 h-5"></i> ORCID
+            </a>
+          </div>
+        </div>
+
+        <!-- CV Download -->
+        <!-- <a href="Tadele_Melese_Lebeza_CV.pdf" download 
+           class="block text-center bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-4 px-6 rounded-xl shadow-xl hover:shadow-amber-500/50 transform hover:scale-105 transition-all flex items-center justify-center gap-3">
+          <i data-lucide="download" class="w-6 h-6"></i>
+          <span>Download Full CV</span>
+        </a> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Expertise Section -->
+  <section id="skills" class="py-24 relative" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+      <h2 class="text-5xl font-extrabold text-center text-white mb-4">
+        Technical <span class="text-cyan-400">Expertise</span>
+      </h2>
+      <p class="text-center text-xl text-gray-400 max-w-3xl mx-auto mb-16">
+        End-to-end mastery of <strong class="text-cyan-300">GeoAI</strong>, <strong class="text-cyan-300">ML</strong>, and <strong class="text-cyan-300">Web Visualization</strong>.
+      </p>
+      <div class="card relative bg-gray-950/70 backdrop-blur-xl border border-cyan-500/20 shadow-2xl shadow-cyan-500/10 p-8 rounded-2xl hover:border-cyan-400/50 transition-all duration-500" data-aos="fade-up" data-aos-delay="100">
+        <!-- Card 1 -->
+        <div class="card bg-green-950/90 bg-var-card-bg p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center mb-6 text-purple-400">
+            <i data-lucide="brain-circuit" class="w-10 h-10 mr-3"></i>
+            <h3 class="text-4xl font-bold text-white">Deep Learning AI</h3>
+          </div>
+          <ul class="text-gray-300 space-y-3 text-2xl">
+            <li><strong>Frameworks:</strong> PyTorch, TensorFlow, Keras</li>
+            <li><strong>Libraries:</strong> scikit-learn, OpenCV, XGBoost, SHAP</li>
+            <li><strong>Models:</strong> CNNs, LSTMs, PSPNet, Time Series</li>
+          </ul>
+          <div class="mt-6">
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 95%"></div>
+            </div>
+            <p class="text-xs text-cyan-400 mt-1 text-right">95% Proficiency</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card bg-purple-950/90 bg-var-card-bg p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center mb-6 text-green-400">
+            <i data-lucide="globe" class="w-10 h-10 mr-3"></i>
+            <h3 class="text-4xl font-bold text-white">Geospatial GeoAI</h3>
+          </div>
+          <ul class="text-gray-300 space-y-3 text-2xl">
+            <li><strong>Tools:</strong> ArcGIS Pro, QGIS, ENVI, ERDAS</li>
+            <li><strong>Cloud:</strong> Google Earth Engine, Sentinel, Landsat</li>
+            <li><strong>Libraries:</strong> GDAL, GeoPandas, Leaflet, Mapbox</li>
+          </ul>
+          <div class="mt-6">
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 98%"></div>
+            </div>
+            <p class="text-xs text-cyan-400 mt-1 text-right">98% Proficiency</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card bg-yellow-950/90 bg-var-card-bg p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="300">
+          <div class="flex items-center mb-6 text-cyan-400">
+            <i data-lucide="bar-chart-3" class="w-10 h-10 mr-3"></i>
+            <h3 class="text-4xl font-bold text-white">Web Visualization</h3>
+          </div>
+          <ul class="text-gray-300 space-y-3 text-2xl">
+            <li><strong>Frontend:</strong> React, D3.js, Plotly Dash</li>
+            <li><strong>Backend:</strong> FastAPI, Node.js, Firebase</li>
+            <li><strong>Tools:</strong> Git, Docker, VS Code, Jupyter</li>
+          </ul>
+          <div class="mt-6">
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 90%"></div>
+            </div>
+            <p class="text-xs text-cyan-400 mt-1 text-right">90% Proficiency</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card bg-cyan-950/90 bg-var-card-bg p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="400">
+          <div class="flex items-center mb-6 text-orange-400">
+            <i data-lucide="database" class="w-10 h-10 mr-3"></i>
+            <h3 class="text-4xl font-bold text-white">Data Engineering</h3>
+          </div>
+          <ul class="text-gray-300 space-y-3 text-2xl">
+            <li><strong>SQL:</strong> PostgreSQL/PostGIS, MySQL</li>
+            <li><strong>ETL:</strong> Python, Airflow, Pandas</li>
+            <li><strong>Cloud:</strong> AWS S3, GCP, Azure Basics</li>
+          </ul>
+          <div class="mt-6">
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 88%"></div>
+            </div>
+            <p class="text-xs text-cyan-400 mt-1 text-right">88% Proficiency</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline -->
+<section id="experience" class="py-24 relative overflow-hidden" data-aos="fade-up">
+  <!-- Subtle glow background -->
+  <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-purple-600/10 to-transparent pointer-events-none"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+    <h2 class="text-5xl md:text-7xl font-extrabold text-center text-white mb-20 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 drop-shadow-2xl">
+      Professional <span class="text-white">Journey</span>
+    </h2>
+
+    <div class="relative max-w-5xl mx-auto">
+
+      <!-- Pulsating central line -->
+      <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-full bg-gradient-to-b from-cyan-400 via-purple-500 to-yellow-400 blur-xl opacity-30"></div>
+      <div class="absolute left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-cyan-400 to-purple-500 opacity-60"></div>
+
+      <!-- Explosive animated connectors -->
+      <style>
+        @keyframes dashFlow { to { stroke-dashoffset: -120; } }
+        .energy-path {
+          fill: none; stroke-width: 4; stroke-linecap: round;
+          stroke-dasharray: 20 20; animation: dashFlow 5s linear infinite;
+          filter: drop-shadow(0 0 20px currentColor);
+        }
+      </style>
+
+      <!-- Connectors (same positions, tuned for new spacing) -->
+      <div class="absolute left-1/2 -translate-x-1/2 w-full h-32" style="top: 220px;"><svg viewBox="0 0 200 130" class="w-full h-full"><defs><linearGradient id="g1"><stop offset="0%" stop-color="#06d6d4"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs><path d="M100,0 C30,65 170,65 100,130" class="energy-path" stroke="url(#g1)"/></svg></div>
+      <div class="absolute left-1/2 -translate-x-1/2 w-full h-32" style="top: 460px;"><svg viewBox="0 0 200 130" class="w-full h-full"><defs><linearGradient id="g2"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs><path d="M100,0 C170,65 30,65 100,130" class="energy-path" stroke="url(#g2)"/></svg></div>
+      <div class="absolute left-1/2 -translate-x-1/2 w-full h-32" style="top: 700px;"><svg viewBox="0 0 200 130" class="w-full h-full"><defs><linearGradient id="g3"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M100,0 C30,65 170,65 100,130" class="energy-path" stroke="url(#g3)"/></svg></div>
+      <div class="absolute left-1/2 -translate-x-1/2 w-full h-32" style="top: 940px;"><svg viewBox="0 0 200 130" class="w-full h-full"><defs><linearGradient id="g4"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#eab308"/></linearGradient></defs><path d="M100,0 C170,65 30, 65 100,130" class="energy-path" stroke="url(#g4)"/></svg></div>
+
+      <div class="space-y-28 md:space-y-36">
+
+        <!-- 1. Current Role -->
+        <article class="relative flex items-center justify-end md:pr-12" data-aos="zoom-in" data-aos-delay="100">
+          <div class="bg-gradient-to-br from-cyan-900/80 to-blue-900/80 backdrop-blur-2xl p-8 rounded-3xl border-2 border-cyan-400/60 shadow-2xl shadow-cyan-500/30 w-full md:w-1/2 hover:scale-105 hover:border-cyan-300 transition-all duration-500">
+            <time class="text-cyan-300 font-bold text-sm tracking-wider">03/2025 – Present</time>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mt-2">Lecturer & GeoAI Researcher</h3>
+            <p class="text-cyan-100 font-semibold text-lg mt-1">Bahir Dar University, Ethiopia</p>
+            <p class="text-gray-200 mt-4 text-base leading-relaxed">
+              Teach GeoAI, GIS, Climate Modeling • Mentor 200+ students • 17+ Q1 publications
+            </p>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-cyan-400 rounded-full border-4 border-black shadow-lg shadow-cyan-400/80 animate-pulse"></div>
+        </article>
+
+        <!-- 2. MEXT Scholar -->
+        <article class="relative flex items-center justify-start md:pl-12" data-aos="zoom-in" data-aos-delay="200">
+          <div class="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-2xl p-8 rounded-3xl border-2 border-purple-400/60 shadow-2xl shadow-purple-500/30 w-full md:w-1/2 order-2 md:order-1 hover:scale-105 transition-all duration-500">
+            <time class="text-purple-300 font-bold text-sm tracking-wider">06/2023 – 03/2025</time>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mt-2">MEXT Scholar & Research Assistant</h3>
+            <p class="text-purple-100 font-semibold text-lg mt-1">Soka University, Japan</p>
+            <p class="text-gray-200 mt-4 text-base leading-relaxed">
+              Advanced predictive modeling • ML + environmental data fusion • Japan–Ethiopia research collaboration
+            </p>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-purple-400 rounded-full border-4 border-black shadow-lg shadow-purple-400/80 animate-pulse"></div>
+        </article>
+
+        <!-- 3. Bahir Dar University (2019–2023) -->
+        <article class="relative flex items-center justify-end md:pr-12" data-aos="zoom-in" data-aos-delay="300">
+          <div class="bg-gradient-to-br from-emerald-900/80 to-teal-900/80 backdrop-blur-2xl p-8 rounded-3xl border-2 border-emerald-400/60 shadow-2xl shadow-emerald-500/30 w-full md:w-1/2 hover:scale-105 transition-all duration-500">
+            <time class="text-emerald-300 font-bold text-sm tracking-wider">10/2019 – 06/2023</time>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mt-2">Lecturer & Researcher</h3>
+            <p class="text-emerald-100 font-semibold text-lg mt-1">Bahir Dar University, Ethiopia</p>
+            <p class="text-gray-200 mt-4 text-base leading-relaxed">
+              Led national projects in drought, LULC, and climate adaptation • Multiple peer-reviewed papers
+            </p>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-emerald-400 rounded-full border-4 border-black shadow-lg shadow-emerald-400/80 animate-pulse"></div>
+        </article>
+
+        <!-- 4. Dilla University -->
+        <article class="relative flex items-center justify-start md:pl-12" data-aos="zoom-in" data-aos-delay="400">
+          <div class="bg-gradient-to-br from-orange-900/80 to-amber-900/80 backdrop-blur-2xl p-8 rounded-3xl border-2 border-orange-400/60 shadow-2xl shadow-orange-500/30 w-full md:w-1/2 order-2 md:order-1 hover:scale-105 transition-all duration-500">
+            <time class="text-orange-300 font-bold text-sm tracking-wider">04/2018 – 10/2019</time>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mt-2">Lecturer</h3>
+            <p class="text-orange-100 font-semibold text-lg mt-1">Dilla University, Ethiopia</p>
+            <p class="text-gray-200 mt-4 text-base leading-relaxed">
+              Taught Remote Sensing, GIS, and Environmental Science • Undergraduate mentoring
+            </p>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-orange-400 rounded-full border-4 border-black shadow-lg shadow-orange-400/80 animate-pulse"></div>
+        </article>
+
+        <!-- 5. High School Teacher -->
+        <article class="relative flex items-center justify-end md:pr-12" data-aos="zoom-in" data-aos-delay="500">
+          <div class="bg-gradient-to-br from-yellow-900/80 to-lime-900/80 backdrop-blur-2xl p-8 rounded-3xl border-2 border-yellow-400/60 shadow-2xl shadow-yellow-500/30 w-full md:w-1/2 hover:scale-105 transition-all duration-500">
+            <time class="text-yellow-300 font-bold text-sm tracking-wider">07/2010 – 01/2017</time>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white mt-2">High School Teacher</h3>
+            <p class="text-yellow-100 font-semibold text-lg mt-1">Yeduha Secondary School, Ethiopia</p>
+            <p class="text-gray-200 mt-4 text-base leading-relaxed">
+              Geography & Environmental Science • Taught 1000+ students • Built geospatial foundation
+            </p>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-yellow-400 rounded-full border-4 border-black shadow-2xl shadow-yellow-400/100 animate-ping"></div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- CTA -->
+  <section class="py-20 text-center relative z-10">
+    <div class="max-w-4xl mx-auto px-6">
+      <h3 class="text-4xl font-extrabold text-white mb-6">Build the Future of Climate & Agriculture</h3>
+      <a href="mailto:tadelemelese21@gmail.com" class="inline-flex items-center gap-4 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white font-bold text-xl py-5 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 animate-float">
+        <i data-lucide="mail" class="w-8 h-8"></i>
+        Collaborate with Tadele
+        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+      </a>
+    </div>
+  </section>
+
+<!-- Hero Header
+  <section class="py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 text-center">
+      <div class="globe-container mb-8" data-aos="fade-down">
+        <div class="globe"></div>
+        <i data-lucide="globe" class="absolute inset-0 m-auto w-32 h-32 text-cyan-400 opacity-70"></i>
+      </div>
+      <h1 class="text-6xl md:text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-600 animate-pulse leading-tight">
+        Tadele Melese Lebeza
+      </h1>
+      <p class="mt-4 text-2xl md:text-3xl text-cyan-300 font-display">Founder & CEO, <span class="text-emerald-400">GeoAgriVision</span></p>
+      <p class="mt-6 text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+        <strong>15 Q1 Publications</strong> • <strong>h-index: 7</strong> • <strong>420+ Citations</strong> • <strong>389.8 Research Interest</strong>
+      </p>
+      <div class="mt-8 flex justify-center gap-6 flex-wrap">
+        <a href="https://geoagrivision.netlify.app" target="_blank" class="bg-gradient-to-r from-emerald-500 to-cyan-600 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all flex items-center gap-3">
+          <i data-lucide="rocket" class="w-6 h-6"></i> Visit GeoAgriVision
+        </a>
+        <a href="https://scholar.google.com/citations?user=EXMML4sAAAAJ&hl=en" target="_blank" class="bg-gray-800 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all flex items-center gap-3">
+          <i data-lucide="graduation-cap" class="w-6 h-6"></i> Google Scholar
+        </a>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Projects Showcase -->
+  <section id="projects" class="py-24 relative z-10" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+      <h2 class="text-5xl md:text-6xl font-extrabold text-center text-white mb-16 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400">
+        World-Class <span class="text-white">Project</span> Showcase
+      </h2>
+
+      <!-- Founder Badge -->
+      <div class="text-center mb-12">
+        <span class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-cyan-700 rounded-full text-white font-bold shadow-xl animate-bounce-slow">
+          <i data-lucide="crown" class="w-6 h-6"></i> Founder of GeoAgriVision
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+
+        <!-- Project 1: GeoAgriVision (LIVE) -->
+        <article class="project-card gradient-border bg-gray-900/70 rounded-3xl group" data-aos="zoom-in">
+          <div class="live-badge flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+            LIVE
+          </div>
+          <div class="h-64 overflow-hidden relative">
+            <img src="screenshots/geoagrivision.png" alt="GeoAgriVision" class="w-full h-full object-cover group-hover:scale-125 transition duration-700" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-3xl font-extrabold text-white mb-3 flex items-center gap-3">
+              GeoAgriVision
+              <i data-lucide="award" class="w-7 h-7 text-yellow-400 animate-bounce"></i>
+            </h3>
+            <p class="text-gray-300 text-base mb-5 leading-relaxed">
+              <strong>Interactive WebGIS platform</strong> for climate-smart agriculture, drought monitoring, and precision farming. Real-time satellite data, AI predictions, and farmer dashboards.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="pub-tag bg-gradient-to-r from-emerald-600 to-cyan-600 text-white">React</span>
+              <span class="pub-tag bg-gradient-to-r from-blue-600 to-indigo-600 text-white">Leaflet</span>
+              <span class="pub-tag bg-gradient-to-r from-purple-600 to-pink-600 text-white">D3.js</span>
+              <span class="pub-tag bg-gradient-to-r from-orange-600 to-red-600 text-white">TensorFlow</span>
+            </div>
+            <div class="flex gap-5 text-cyan-400 text-lg">
+              <button onclick="openDemo('https://geoagrivision.netlify.app')" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="play-circle" class="w-6 h-6"></i> Live Demo
+              </button>
+              <a href="https://geoagrivision.netlify.app" target="_blank" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="external-link" class="w-6 h-6"></i> Visit Site
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: CASE Zenzelima (LIVE) -->
+        <article class="project-card gradient-border bg-gray-900/70 rounded-3xl group" data-aos="zoom-in" data-aos-delay="100">
+          <div class="live-badge flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+            LIVE
+          </div>
+          <div class="h-64 overflow-hidden relative">
+            <img src="screenshots/case_zenzelima.png" alt="CASE Zenzelima" class="w-full h-full object-cover group-hover:scale-125 transition duration-700" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-3xl font-extrabold text-white mb-3">CASE Zenzelima</h3>
+            <p class="text-gray-300 text-base mb-5 leading-relaxed">
+              Postgraduate research portal with <strong>interactive data visualization</strong>, publication tracking, and real-time collaboration tools for Bahir Dar University.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="pub-tag bg-gradient-to-r from-blue-600 to-cyan-600 text-white">HTML5</span>
+              <span class="pub-tag bg-gradient-to-r from-indigo-600 to-purple-600 text-white">CSS3</span>
+              <span class="pub-tag bg-gradient-to-r from-pink-600 to-rose-600 text-white">Vanilla JS</span>
+              <span class="pub-tag bg-gradient-to-r from-amber-600 to-orange-600 text-white">Chart.js</span>
+            </div>
+            <div class="flex gap-5 text-cyan-400 text-lg">
+              <button onclick="openDemo('https://spontaneous-pixie-c248c2.netlify.app')" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="play-circle" class="w-6 h-6"></i> Live Demo
+              </button>
+              <a href="https://spontaneous-pixie-c248c2.netlify.app" target="_blank" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="external-link" class="w-6 h-6"></i> Visit Site
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: NRM Department Portal (Coming Soon) -->
+        <article class="project-card gradient-border bg-gray-900/70 rounded-3xl group" data-aos="zoom-in" data-aos-delay="200">
+          <div class="h-64 overflow-hidden relative bg-gradient-to-br from-amber-600 via-orange-600 to-red-600 flex items-center justify-center">
+            <i data-lucide="construction" class="w-24 h-24 text-white opacity-70 animate-bounce"></i>
+            <div class="absolute inset-0 bg-black/30"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-3xl font-extrabold text-white mb-3 flex items-center gap-3">
+              NRM Department Portal
+              <i data-lucide="zap" class="w-7 h-7 text-yellow-400 animate-pulse"></i>
+            </h3>
+            <p class="text-gray-300 text-base mb-5 leading-relaxed">
+              Full academic ecosystem: student dashboards, course registration, research repository, and AI-powered recommendation engine.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="pub-tag bg-gradient-to-r from-yellow-600 to-amber-600 text-white">React</span>
+              <span class="pub-tag bg-gradient-to-r from-orange-600 to-red-600 text-white">Tailwind</span>
+              <span class="pub-tag bg-gradient-to-r from-purple-600 to-pink-600 text-white">Node.js</span>
+              <span class="pub-tag bg-gradient-to-r from-gray-600 to-gray-700 text-white">In Progress</span>
+            </div>
+            <div class="text-yellow-400 font-bold text-lg flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5"></i> Launching Q1 2026
+            </div>
+          </div>
+        </article>
+      
+                <!-- Project 1: Climate Dashboard (NEW!) -->
+        <article class="project-card gradient-border bg-gray-900/70 rounded-3xl group" data-aos="zoom-in">
+          <div class="live-badge flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+            LIVE
+          </div>
+          <div class="climate-badge">
+            <i data-lucide="thermometer" class="w-4 h-4 inline"></i> CLIMATE
+          </div>
+          <div class="h-64 overflow-hidden relative">
+            <img src="screenshots/climate-dashboard.jpg" alt="Climate Dashboard" class="w-full h-full object-cover group-hover:scale-125 transition duration-700" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-3xl font-extrabold text-white mb-3 flex items-center gap-3">
+              Climate Dashboard
+              <i data-lucide="zap" class="w-7 h-7 text-red-400 animate-pulse"></i>
+            </h3>
+            <p class="text-gray-300 text-base mb-5 leading-relaxed">
+              <strong>Real-time climate monitoring</strong> for Ethiopia: SPI, PDSI, rainfall trends, temperature anomalies, and drought risk maps. Powered by CMIP6 & CHIRPS.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="pub-tag bg-gradient-to-r from-red-600 to-orange-600 text-white">React</span>
+              <span class="pub-tag bg-gradient-to-r from-blue-600 to-cyan-600 text-white">D3.js</span>
+              <span class="pub-tag bg-gradient-to-r from-green-600 to-emerald-600 text-white">Leaflet</span>
+              <span class="pub-tag bg-gradient-to-r from-purple-600 to-pink-600 text-white">Python API</span>
+            </div>
+            <div class="flex gap-5 text-cyan-400 text-lg">
+              <button onclick="openDemo('https://climate-dashboard-ethiopia.netlify.app')" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="play-circle" class="w-6 h-6"></i> Live Demo
+              </button>
+              <a href="https://climate-dashboard-ethiopia.netlify.app" target="_blank" class="hover:text-white flex items-center gap-2 font-bold transition-all hover:scale-110">
+                <i data-lucide="external-link" class="w-6 h-6"></i> Visit
+              </a>
+              <div class="text-yellow-400 font-bold text-lg flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5"></i> Launching Soon
+            </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Live Demo Modal -->
+      <div id="demo-modal" class="demo-modal">
+        <div class="relative w-full max-w-7xl">
+          <button onclick="closeDemo()" class="absolute -top-12 right-0 text-white hover:text-cyan-400 text-3xl transition-all">
+            <i data-lucide="x"></i>
+          </button>
+          <iframe id="demo-frame" class="demo-frame" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA
+  <section class="py-20 text-center relative z-10">
+    <div class="max-w-4xl mx-auto px-6">
+      <h3 class="text-4xl font-extrabold text-white mb-6">Ready to Revolutionize Agriculture with GeoAI?</h3>
+      <a href="mailto:tadelemelese21@gmail.com" class="inline-flex items-center gap-4 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white font-bold text-xl py-5 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 animate-float">
+        <i data-lucide="mail" class="w-8 h-8"></i>
+        Partner with GeoAgriVision
+        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+      </a>
+    </div>
+  </section> -->
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tadele Melese Lebeza | GeoAI & Hydro-Climate Researcher</title>
+  <meta name="description" content="Lecturer & Researcher at Bahir Dar University | 17  Papers | Drought Prediction | Remote Sensing | Machine Learning"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #0a0e17; color: #e2e8f0; }
+    .pub-item { transition: all 0.4s ease; }
+    .pub-item:hover { transform: translateX(8px); background: rgba(34, 211, 238, 0.05); border-left: 4px solid #22d3ee; }
+    .highlight-name { color: #22d3ee; font-weight: 900; text-shadow: 0 0 15px rgba(34,211,238,0.6); }
+    .abstract { max-height: 0; overflow: hidden; transition: max-height 0.6s ease, padding 0.6s ease; }
+    .abstract.open { max-height: 500px; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .number-circle { background: linear-gradient(135deg, #22d3ee, #10b981); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 900; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-950 via-cyan-950/20 to-emerald-950/10">
+  <!-- PUBLICATIONS LIST -->
+  <section id="publications", class="max-w-5xl mx-auto px-6 pb-20">
+    <h2 class="text-4xl md:text-6xl font-extrabold text-center mb-16 bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+      Peer-Reviewed Publications 
+    </h2>
+
+    <div id="publications-list" class="space-y-8">
+      <!-- JS injects numbered publications here -->
+    </div>
+  </section>
+  <!-- HEADER
+  <header class="text-center py-20 px-6">
+    <h1 class="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-cyan-400 via-emerald-400 to-yellow-400 bg-clip-text text-transparent">
+      Tadele Melese Lebeza
+    </h1>
+    <p class="mt-4 text-2xl text-gray-300">Lecturer and Researcher</p>
+    <p class="mt-2 text-lg text-gray-400">Department of Natural Resource Management, Bahir Dar University</p>
+    <div class="mt-8 flex justify-center gap-6 flex-wrap">
+      <a href="mailto:tadelemelese21m@gmail.com" class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300"><i data-lucide="mail"></i> tadelemelese21m@gmail.com</a>
+      <a href="https://scholar.google.com/citations?user=EXMML4sAAAAJ" target="_blank" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300"><i data-lucide="graduation-cap"></i> Google Scholar</a>
+      <a href="Tadele_Melese_Lebeza CV (6).pdf" target="_blank" class="flex items-center gap-2 text-yellow-400 hover:text-yellow-300"><i data-lucide="download"></i> Download CV</a>
+    </div>
+  </header> -->
+
+  <!-- FILTERS -->
+  <div class="max-w-6xl mx-auto px-6 mb-12">
+    <div class="bg-gray-900/70 backdrop-blur-xl rounded-2xl p-6 border border-cyan-500/30">
+      <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+        <div class="flex flex-wrap gap-3">
+          <button class="filter-btn active px-6 py-3 rounded-full bg-gradient-to-r from-cyan-600 to-emerald-600 text-white font-bold" data-filter="all">All (17)</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-year="2025">2025</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-year="2024">2024</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-year="2023">2023</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-year="2022">2022</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-keyword="ml">Machine Learning & AI</button>
+          <button class="filter-btn px-5 py-3 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700" data-keyword="drought">Drought</button>
+        </div>
+        <input type="text" id="search" placeholder="Search title, journal, DOI..." class="w-full md:w-80 px-5 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-cyan-400">
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    const publications = [
+      { no: 1, title: "Groundwater potential zone mapping using analytical hierarchy process and GIS in Muga Watershed, Abay Basin, Ethiopia", authors: "Melese, T., & Belay, T.", journal: "Global Challenges", year: 2022, doi: "10.1002/gch2.202100068", q1: true,highlight: true },
+      { no: 2, title: "The spatiotemporal dynamics of land use land cover change, and its impact on soil erosion in Tagaw Watershed, Blue Nile Basin, Ethiopia", authors: "Melese, T., Senamaw, A., Belay, T., & Bayable, G.", journal: "Global Challenges", year: 2021, doi: "10.1002/gch2.202000109", q1: true },
+      { no: 3, title: "Impacts of land use and land cover change on ecosystem service values in the Afroalpine area of Guna Mountain, Northwest Ethiopia", authors: "Belay, T., Melese, T., & Senamaw, A.", journal: "Heliyon", year: 2022, doi: "10.1016/j.heliyon.2022.e12400", q1: true },
+      { no: 4, title: "Application of analytical hierarchal process, frequency ratio, and Shannon entropy approaches for landslide susceptibility mapping using geospatial technology: The case of Dejen district, Ethiopia", authors: "Melese, T., Belay, T., & Andemo, A.", journal: "Arabian Journal of Geosciences", year: 2022, doi: "10.1007/s12517-022-09645-7" },
+      { no: 5, title: "Smallholder farmers’ vulnerability to climate change and variability: Evidence from three agroecologies in the Upper Blue Nile, Ethiopia", authors: "Berhanu, A. A., Ayele, Z. B., Dagnew, D. C., Melese, T., Fenta, A. B., & Kassie, K. E.", journal: "Heliyon", year: 2024, doi: "10.1016/j.heliyon.2024.e28545", q1: true },
+      { no: 6, title: "Performance of specific CMIP6 GCMs for simulating the historical rainfall and temperature climatology of Lake Tana sub-basin, Ethiopia", authors: "Lebeza, T. M., Gashaw, T., Bayabil, H. K., van Oel, P. R., Worqlul, A. W., Dile, Y. T., & Chukalla, A. D.", journal: "Scientific African", year: 2024, doi: "10.1016/j.sciaf.2024.e02387", q1: true },
+      { no: 7, title: "Trend analysis of hydro-climate variables in the Jemma sub-basin of Upper Blue Nile (Abbay) Basin, Ethiopia", authors: "Lebeza, T. M., Gashaw, T., Tefera, G. W., & Mohammed, J. A.", journal: "SN Applied Sciences", year: 2023, doi: "10.1007/s42452-023-05345-7" },
+      { no: 8, title: "Trends in rainfall and temperature extremes in Ethiopia: Station and agro-ecological zone levels of analysis", authors: "Wubaye, G. B., Gashaw, T., Worqlul, A. W., Dile, Y. T., Melese, T., Haileslassie, A., & Srinivasan, R.", journal: "Atmosphere", year: 2023, doi: "10.3390/atmos14030483", q1: true },
+      { no: 9, title: "Comparative analysis of RUSLE and SWPT for sub-watershed conservation prioritization in the Ayu watershed, Abay basin, Ethiopia", authors: "Terefe, B., Melese, T., Temesgen, F., Anagaw, A., Afework, A., & Mitikie, G.", journal: "Heliyon", year: 2024, doi: "10.1016/j.heliyon.2024.e34567", q1: true },
+      { no: 10, title: "Application of geospatial technology for potential ecotourism site selection in Masha district, Southwest Ethiopia", authors: "Andemo, A., Getahun, K., Melese, A., & Melese, T.", journal: "International Journal of Environmental Science and Technology", year: 2024, doi: "10.1007/s13762-023-05019-4" },
+      { no: 11, title: "Livelihood vulnerability of rural households to climate variability and change: An agroecological system-based approach in Northwestern Ethiopia", authors: "Belay, T., & Lebeza, T. M.", journal: "Heliyon", year: 2024, doi: "10.1016/j.heliyon.2024.e31234", q1: true },
+      { no: 12, title: "Meteorological drought under historical and future climate scenarios in North Gojjam sub-basin, Abay River basin of Ethiopia", authors: "Belay, T., & Lebeza, T. M.", journal: "PLOS ONE", year: 2024, doi: "10.1371/journal.pone.0301234", q1: true },
+      { no: 13, title: "Machine Learning-Driven Drought Prediction Using Palmer Drought Severity Index and TerraClimate Data over Ethiopia", authors: "Lebeza, T. M., Gizache, A., Belay, T., & Terefe, B.", journal: "PLOS ONE", year: 2024, doi: "10.1371/journal.pone.0326174", q1: true, q1: true },
+      { no: 14, title: "Land Use/Cover Classification Using Machine Learning Algorithms and Their Impacts on Land Surface Temperature and Soil Moisture in the Alawuha Watershed, Ethiopia", authors: "Bayable, G., Gebrie, G., Melese, T., & Melaku, A.", journal: "Environmental and Sustainability Indicators", year: 2025, doi: "10.1016/j.indic.2025.100797", q1: true },
+      { no: 15, title: "Assessment of long-term spatiotemporal variability of vegetation drought and its link with teleconnection factors in Ethiopia", authors: "Bayable, G., & Melese, T.", journal: "Natural Hazards Research", year: 2025, doi: "10.1016/j.nhres.2025.100145", q1: true },
+      { no: "•", title: "Enhanced detection of water hyacinth using PSPNet deep learning semantic segmentation", authors: "Lebeza, T. M., Bismark, A., & Hiroki, I.", journal: "Artificial Intelligence in Agriculture (Under Review)", year: 2024, doi: "", under: true }
+    ];
+
+    function highlightName(text) {
+      return text.replace(/(Tadele\s+Melese\s+Lebeza|Lebeza,\s*T\.\s*M\.?|Melese,\s*T\.?|T\.\s*M\.\s*Lebeza)/gi, 
+        '<span class="highlight-name">T. M. Lebeza</span>');
+    }
+
+    function render() {
+      const container = document.getElementById('publications-list');
+      container.innerHTML = '';
+      const search = document.getElementById('search').value.toLowerCase();
+      const activeFilter = document.querySelector('.filter-btn.active');
+
+      publications.forEach(pub => {
+        const show = 
+          (!search || pub.title.toLowerCase().includes(search) || pub.journal.toLowerCase().includes(search) || (pub.doi && pub.doi.includes(search))) &&
+          (!activeFilter.dataset.year || pub.year == activeFilter.dataset.year) &&
+          (!activeFilter.dataset.keyword || pub.title.toLowerCase().includes(activeFilter.dataset.keyword));
+
+        if (!show) return;
+
+        const item = document.createElement('div');
+        item.className = `pub-item bg-gray-900/60 backdrop-blur-xl rounded-2xl p-8 border border-gray-800 hover:border-cyan-500/50`;
+        
+        item.innerHTML = `
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
+              <span class="text-3xl font-cyan number-circle">${pub.no}</span>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white mb-3 leading-tight">
+                ${highlightName(pub.authors)}
+              </h3>
+              <p class="text-gray-300 mb-4 italic">${pub.title}</p>
+              <div class="flex items-center gap-4 text-sm text-gray-400 mb-4">
+                <span class="font-bold ${pub.q1 ? 'text-green-400' : ''}">${pub.journal}</span>
+                <span>• ${pub.year}</span>
+                ${pub.q1 ? '<span class="bg-green-900/70 text-green-300 px-3 py-1 rounded-full text-xs font-bold">Q1</span>' : ''}
+                ${pub.highlight ? '<span class="bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold animate-pulse">MOST CITED</span>' : ''}
+                ${pub.under ? '<span class="bg-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold">UNDER REVIEW</span>' : ''}
+              </div>
+              ${pub.doi ? `<a href="https://doi.org/${pub.doi}" target="_blank" class="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-medium text-sm">
+                <i data-lucide="external-link" class="w-4 h-4"></i> ${pub.doi}
+              </a>` : ''}
+              <button class="abstract-toggle ml-8 text-cyan-400 hover:text-white font-bold text-sm flex items-center gap-2 mt-3">
+                <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
+                <span>Show Abstract & Details</span>
+              </button>
+              <div class="abstract mt-4 text-gray-400 text-sm leading-relaxed border-t border-gray-700 pt-6">
+                <p>Full abstract and citation metrics available via DOI link above.</p>
+                <p class="mt-3"><a href="mailto:tadelemelese21m@gmail.com?subject=PDF Request: ${encodeURIComponent(pub.title)}" class="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-2">
+                  <i data-lucide="download"></i> Request Full PDF (Free)
+                </a></p>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      lucide.createIcons();
+
+      document.querySelectorAll('.abstract-toggle').forEach(btn => {
+        btn.onclick = () => {
+          const abstract = btn.closest('.flex-1').querySelector('.abstract');
+          abstract.classList.toggle('open');
+          btn.querySelector('i').classList.toggle('rotate-180');
+        };
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      render();
+      document.getElementById('search').addEventListener('input', render);
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'bg-gradient-to-r', 'from-cyan-600', 'to-emerald-600'));
+          btn.classList.add('active', 'bg-gradient-to-r', 'from-cyan-600', 'to-emerald-600');
+          render();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+  
+<!-- References -->
+<!-- REFERENCES / COLLABORATORS SECTION – WORLD-CLASS -->
+<section id="references" class="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-slate-950 via-blue-950 to-emerald-950">
+  <!-- Background Effects -->
+  <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-cyan-900/20"></div>
+  <div class="absolute top-20 left-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-20 right-10 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-8">
+    <!-- Section Title -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-5xl md:text-6xl font-extrabold">
+        <span class="bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-500 bg-clip-text text-transparent">
+          Global Collaborators & Key References
+        </span>
+      </h2>
+      <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
+        Working with world-leading experts in hydrology, GeoAI, and climate resilience
+      </p>
+    </div>
+
+    <!-- References Grid -->
+    <div id="references-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+      <!-- JS will populate this -->
+    </div>
+  </div>
+</section>
+<script>
+  const references = [
+    {
+      name: "Dr. Haimanot Bayabil",
+      title: "Associate Professor",
+      affiliation: "University of Florida, USA",
+      expertise: "Precision Water & Nutrient Management • Hydrologic Modeling • Remote Sensing • Machine Learning",
+      email: "hbayabil@ufl.edu",
+      phone: "+1-352-294-6742",
+      relationship: "Research Mentor & Collaborator",
+      description: "Guided my research in remote sensing and conservation. Key support during MEXT scholarship application.",
+      image: "public/assets/Haimanote.jpeg",
+      color: "from-cyan-500 to-blue-600"
+    },
+    {
+      name: "Dr. Pieter van Oel",
+      title: "Professor",
+      affiliation: "Wageningen University, Netherlands",
+      expertise: "Socio-hydrology • Water Management • Drought Resilience",
+      email: "pieter.vanoel@wur.nl",
+      phone: "+31 317 482300",
+      relationship: "Research Collaborator",
+      description: "Provided deep insights into socio-hydrological systems and drought resilience.",
+      image: "public/assets/Peiter.jpeg",
+      color: "from-emerald-500 to-teal-600"
+    },
+    {
+      name: "Dr. Temesgen Gashaw Tarkegn",
+      title: "Postdoctoral Researcher",
+      affiliation: "Prairie View A&M University, Texas, USA",
+      expertise: "Hydrology • Drought • Geospatial Analysis • Sediment Studies",
+      email: "gtemesgen114@gmail.com",
+      phone: "+1 936-261-3311",
+      relationship: "Close Research Collaborator",
+      description: "Co-authored multiple Q1 papers on drought and geospatial modeling.",
+      image: "public/assets/Temesgen.jpeg",
+      color: "from-orange-500 to-red-600"
+    },
+    {
+      name: "Dr. Anwar Assefa Adem",
+      title: "Postdoctoral Researcher",
+      affiliation: "Prairie View A&M University, Texas, USA",
+      expertise: "Hydrology • Water Resources Engineering • Remote Sensing & GIS",
+      email: "anwarasefa@gmail.com",
+      phone: "+1 936-261-3311",
+      relationship: "Close Research Collaborator",
+      description: "Advanced collaboration on water resources and remote sensing applications.",
+      image: "public/assets/Anwar.webp",
+      color: "from-purple-500 to-pink-600"
+    }
+  ];
+
+  function renderReferences() {
+    const container = document.getElementById('references-container');
+    container.innerHTML = ''; // Clear first
+
+    references.forEach((ref, index) => {
+      const card = document.createElement('div');
+      card.className = `group relative bg-slate-900/70 backdrop-blur-xl border border-gray-800 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-4`;
+      card.setAttribute('data-aos', 'fade-up');
+      card.setAttribute('data-aos-delay', (index * 100));
+
+      card.innerHTML = `
+        <div class="absolute inset-0 bg-gradient-to-br ${ref.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+        
+        <div class="relative p-8 text-center">
+          <!-- Photo -->
+          <div class="mx-auto w-32 h-32 mb-6 relative">
+            <img src="${ref.image}" alt="${ref.name}" class="w-full h-full object-cover rounded-full ring-4 ring-gray-800 group-hover:ring-cyan-500 transition-all duration-500">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+
+          <!-- Name & Title -->
+          <h3 class="text-2xl font-bold text-white mb-1">${ref.name}</h3>
+          <p class="text-sm text-cyan-400 font-medium">${ref.title}</p>
+          <p class="text-xs text-gray-400 mt-1">${ref.affiliation}</p>
+
+          <!-- Relationship -->
+          <span class="inline-block mt-3 px-4 py-1 rounded-full bg-gradient-to-r ${ref.color} text-white text-xs font-bold">
+            ${ref.relationship}
+          </span>
+
+          <!-- Expertise Tags -->
+          <p class="text-xs text-gray-300 mt-4 leading-relaxed line-clamp-3">
+            ${ref.expertise}
+          </p>
+
+          <!-- Short Description -->
+          <p class="text-xs text-gray-400 mt-3 italic opacity-80">
+            “${ref.description}”
+          </p>
+
+          <!-- Contact Buttons -->
+          <div class="flex justify-center gap-4 mt-6">
+            <a href="mailto:${ref.email}" class="p-3 bg-cyan-500/20 border border-cyan-500/50 rounded-xl hover:bg-cyan-500 hover:text-white hover:border-cyan-400 transition-all transform hover:scale-110">
+              <i data-lucide="mail" class="w-5 h-5"></i>
+            </a>
+            <a href="https://scholar.google.com/scholar?q=${encodeURIComponent(ref.name)}" target="_blank" class="p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-xl hover:bg-emerald-500 hover:text-white hover:border-emerald-400 transition-all transform hover:scale-110">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    // Re-create Lucide icons
+    lucide.createIcons();
+  }
+
+  // Run on load
+  document.addEventListener('DOMContentLoaded', renderReferences);
+</script>
+<!-- CONTACT SECTION — FINAL 100% WORKING & GORGEOUS -->
+<section id="contact" class="py-32 lg:py-48 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute top-32 right-1/4 w-80 h-80 bg-emerald-500/25 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-10 left-1/3 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="text-center mb-20">
+      <h2 class="text-6xl md:text-8xl font-black text-white">
+        <span class="bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-500 bg-clip-text text-transparent">
+          LET'S BUILD THE FUTURE
+        </span>
+      </h2>
+      <p class="mt-8 text-2xl md:text-3xl text-gray-200 font-light">GeoAI • Climate • Africa • Tomorrow</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto">
+      <form id="contact-form" action="https://formspree.io/f/mkgwryrn" method="POST"
+        class="relative bg-black/50 backdrop-blur-3xl p-12 md:p-20 rounded-4xl border-4 border-cyan-500/60 
+               shadow-2xl shadow-cyan-500/40 hover:shadow-cyan-500/70 transition-all duration-1000">
+
+        <!-- SUCCESS MESSAGE -->
+        <div id="success-message" class="hidden text-center py-20">
+          <i data-lucide="check-circle" class="w-32 h-32 text-emerald-400 mx-auto mb-8"></i>
+          <h3 class="text-5xl font-black text-emerald-400 mb-4">MESSAGE SENT SUCCESSFULLY!</h3>
+          <p class="text-2xl text-gray-300">Tadele replies in <span class="text-cyan-400 font-bold">&lt; 2 hours</span></p>
+        </div>
+
+        <!-- FORM FIELDS — NOW WITH CORRECT ID -->
+        <div id="form-fields">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
+            <div>
+              <label class="block text-2xl font-bold text-cyan-300 mb-4"><i data-lucide="user"></i> Full Name *</label>
+              <input type="text" name="name" required placeholder="Tadele Melese Lebeza"
+                class="w-full px-8 py-6 rounded-2xl bg-white/10 border-2 border-cyan-500/50 text-white text-lg focus:border-cyan-300 focus:ring-4 focus:ring-cyan-500/30 transition-all"/>
+            </div>
+            <div>
+              <label class="block text-2xl font-bold text-emerald-300 mb-4"><i data-lucide="mail"></i> Email *</label>
+              <input type="email" name="email" required placeholder="you@harvard.edu"
+                class="w-full px-8 py-6 rounded-2xl bg-white/10 border-2 border-emerald-500/50 text-white text-lg focus:border-emerald-300 focus:ring-4 focus:ring-emerald-500/30 transition-all"/>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
+            <div>
+              <label class="block text-2xl font-bold text-purple-300 mb-4"><i data-lucide="building-2"></i> Organization</label>
+              <input type="text" name="organization" placeholder="NASA • World Bank • Addis Ababa University"
+                class="w-full px-8 py-6 rounded-2xl bg-white/10 border-2 border-purple-500/50 text-white text-lg"/>
+            </div>
+            <div>
+              <label class="block text-2xl font-bold text-yellow-300 mb-4"><i data-lucide="globe"></i> Country</label>
+              <select name="country" class="w-full px-8 py-6 rounded-2xl bg-white/10 border-2 border-yellow-500/50 text-white text-lg">
+                <option>Ethiopia</option>
+                <option>United States</option>
+                <option>Germany</option>
+                <option>Japan</option>
+                <option>Kenya</option>
+                <option>UK</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-12">
+            <label class="block text-3xl font-black text-emerald-400 mb-6"><i data-lucide="rocket"></i> Your Mission *</label>
+            <textarea name="message" rows="8" required placeholder="I need your GeoAI expertise for..."
+              class="w-full px-8 py-6 rounded-2xl bg-white/10 border-2 border-emerald-500/60 text-white text-lg focus:border-emerald-300 focus:ring-4 focus:ring-emerald-500/30 resize-none"></textarea>
+          </div>
+
+          <div class="text-center">
+            <button type="submit"
+              class="px-20 py-8 bg-gradient-to-r from-cyan-500 via-emerald-500 to-purple-600 text-black text-3xl font-black rounded-3xl
+                     shadow-2xl shadow-cyan-500/60 hover:scale-110 transition-all duration-700">
+              <span class="flex items-center gap-6 mx-auto">
+                SEND TO TADELE <i data-lucide="send"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Instant Contact -->
+    <div class="mt-32 text-center">
+      <!-- <p class="text-4xl font-bold text-gray-200 mb-12">Instant Contact — I reply in minutes:</p> -->
+      <div class="flex flex-wrap justify-center gap-8">
+        <a href="mailto:tadelemelese21m@gmail.com" class="flex items-center gap-4 px-10 py-6 bg-cyan-500/20 rounded-2xl border-2 border-cyan-400 hover:bg-cyan-500/40 transition-all">
+          <i data-lucide="mail" class="w-10 h-10"></i> tadelemelese21m@gmail.com
+        </a>
+        <a href="https://wa.me/251918304306" class="flex items-center gap-4 px-10 py-6 bg-emerald-500/20 rounded-2xl border-2 border-emerald-400 hover:bg-emerald-500/40 transition-all">
+          <i data-lucide="message-circle" class="w-10 h-10"></i> WhatsApp +251 918 304 306
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIXED JAVASCRIPT — NOW WORKS 100% -->
+<script>
+  const form = document.getElementById('contact-form');
+  const successMsg = document.getElementById('success-message');
+  const formFields = document.getElementById('form-fields');  // ← THIS WAS MISSING BEFORE!
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const button = form.querySelector('button');
+    const original = button.innerHTML;
+    button.innerHTML = '<i data-lucide="loader-2" class="w-10 h-10 animate-spin"></i> SENDING...';
+    button.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        formFields.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+        lucide.createIcons();
+      } else {
+        alert("Error — use WhatsApp instead");
+      }
+    } catch {
+      alert("No internet — message me on WhatsApp!");
+    } finally {
+      button.innerHTML = original;
+      button.disabled = false;
+    }
+  });
+</script>
+
+<!-- Required Styles (add once) -->
+<style>
+  @keyframes gradient-x { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .animate-gradient-x { background-size: 200%; animation: gradient-x 8s linear infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+  @keyframes float-reverse { 0%,100% { transform: translateY(0); } 50% { transform: translateY(20px); } }
+  .animate-float { animation: float 12s ease-in-out infinite; }
+  .animate-float-reverse { animation: float-reverse 15s ease-in-out infinite; }
+  .futuristic-btn { @apply flex items-center gap-4 px-8 py-5 rounded-2xl bg-white/5 backdrop-blur-xl border-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl; }
+  .futuristic-btn.cyan   { border-color #06d6d4;   box-shadow: 0 0 20px #06d6d430; }
+  .futuristic-btn.emerald{ border-color #10b981;   box-shadow: 0 0 20px #10b98130; }
+  .futuristic-btn.purple { border-color #a855f7;   box-shadow: 0 0 20px #a855f730; }
+</style>
+
+
+<!-- FUTURISTIC GLOBAL FOOTER – 2025 EDITION -->
+<footer class="relative overflow-hidden border-t border-cyan-500/20 bg-black/40 backdrop-blur-xl">
+  <!-- Animated background glow -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-cyan-500/10 blur-3xl animate-pulse"></div>
+  </div>
+
+  <div class="relative z-10 py-12 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+      <!-- Main text with glow -->
+      <p class="text-lg md:text-xl font-medium text-gray-300">
+        © <span id="year">2025</span> 
+        <span class="text-white font-bold">Tadele Melese Lebeza</span> 
+        — GeoAI Pioneer
+      </p>
+
+      <!-- Epic tagline
+      <p class="mt-4 text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent 
+                 bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400 
+                 animate-gradient-x tracking-tight">
+        Crafted with 
+        <span class="text-red-500 drop-shadow-lg animate-pulse">Love</span> 
+        & Code in 
+        <span class="text-cyan-300">Ethiopia</span>
+      </p> -->
+
+      <!-- Tiny social touch (optional, super clean) -->
+      <div class="mt-8 flex justify-center items-center gap-6 text-gray-500">
+        <a href="https://github.com/tadele-melese" target="_blank" class="hover:text-gray-400 hover:text-cyan-400 transition">
+          <i data-lucide="github" class="w-6 h-6"></i>
+        </a>
+        <a href="https://linkedin.com/in/tadele-melese-lebeza-7a45961ba" target="_blank" class="hover:text-blue-400 transition">
+          <i data-lucide="linkedin" class="w-6 h-6"></i>
+        </a>
+        <a href="mailto:tadelemelese21@gmail.com" class="hover:text-emerald-400 transition">
+          <i data-lucide="mail" class="w-6 h-6"></i>
+        </a>
+      </div>
+
+      <!-- Auto-updating year (never outdated) -->
+      <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+      </script>
+    </div>
+  </div>
+
+  <!-- Bottom accent line -->
+  <div class="h-1 bg-gradient-to-r from-cyan-500 via-emerald-500 to-purple-500"></div>
+</footer>
+
+  <!-- Back to Top -->
+  <button id="backToTopBtn" aria-label="Back to Top" class="fixed bottom-8 right-8 rounded-full p-4 opacity-0 pointer-events-none transition-all z-50">
+    <i data-lucide="arrow-up" class="w-6 h-6 text-white"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Particles.js
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#00C4CC" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.3, "random": true },
+        "size": { "value": 3, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#00C4CC", "opacity": 0.2, "width": 1 },
+        "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+        "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } }
+      },
+      "retina_detect": true
+    });
+
+    // AOS Init
+    AOS.init({ duration: 1000, once: true });
+
+    // Mobile Menu
+    document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Back to Top
+    const backToTop = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTop.style.opacity = window.scrollY > 500 ? '1' : '0';
+      backToTop.style.pointerEvents = window.scrollY > 500 ? 'auto' : 'none';
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Contact Form
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const resp = document.getElementById('form-response');
+      resp.textContent = 'Message sent! I’ll reply within 24 hours.';
+      resp.classList.remove('hidden');
+      this.reset();
+      setTimeout(() => resp.classList.add('hidden'), 5000);
+    });
+
+    // Skill Bars Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-progress').forEach(bar => {
+            bar.style.width = bar.parentElement.nextElementSibling.textContent.match(/\d+/) + '%';
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(document.querySelector('#skills'));
+  </script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    lucide.createIcons();
+
+    // Tab System
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('active', 'bg-gradient-to-r', 'from-cyan-600', 'to-blue-700', 'text-white');
+          b.classList.add('bg-gray-800', 'text-gray-300');
+        });
+        btn.classList.add('active', 'bg-gradient-to-r', 'from-cyan-600', 'to-blue-700', 'text-white');
+        btn.classList.remove('bg-gray-800', 'text-gray-300');
+
+        const cat = btn.dataset.category;
+        document.querySelectorAll('.pub-card').forEach(card => {
+          card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'block' : 'none';
+        });
+      });
+    });
+
+    // Search & Sort
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+    const grid = document.getElementById('publication-grid');
+
+    function filterAndSort() {
+      const query = searchInput.value.toLowerCase();
+      const sort = sortSelect.value;
+      const cards = Array.from(grid.children);
+
+      let filtered = cards.filter(card => {
+        const text = card.textContent.toLowerCase();
+        return text.includes(query);
+      });
+
+      filtered.sort((a, b) => {
+        if (sort === 'year-desc') return b.dataset.year - a.dataset.year;
+        if (sort === 'year-asc') return a.dataset.year - b.dataset.year;
+        if (sort === 'citations') return (b.dataset.citations || 0) - (a.dataset.citations || 0);
+        if (sort === 'title') return a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent);
+        return 0;
+      });
+
+      grid.innerHTML = '';
+      filtered.forEach(card => grid.appendChild(card));
+    }
+
+    searchInput.addEventListener('input', filterAndSort);
+    sortSelect.addEventListener('change', filterAndSort);
+
+    // Abstract Toggle with Smooth Animation
+    document.querySelectorAll('.abstract-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const abstract = btn.nextElementSibling.nextElementSibling;
+        abstract.classList.toggle('open');
+        const icon = btn.querySelector('i');
+        icon.setAttribute('data-lucide', abstract.classList.contains('open') ? 'book-x' : 'book-open');
+        lucide.createIcons();
+      });
+    });
+
+    // Auto-show all
+    document.querySelector('.tab-btn[data-category="all"]').click();
+  </script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+    lucide.createIcons();
+
+    // Live Demo Modal
+    function openDemo(url) {
+      const modal = document.getElementById('demo-modal');
+      const frame = document.getElementById('demo-frame');
+      frame.src = url;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDemo() {
+      const modal = document.getElementById('demo-modal');
+      const frame = document.getElementById('demo-frame');
+      modal.classList.remove('open');
+      frame.src = '';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDemo();
+    });
+
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelectorAll('.particle');
+      parallax.forEach(p => {
+        const speed = 0.5;
+        p.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+  </script>
+  <script>
+  const titles = [
+    "GeoAI Researcher ",
+    "Hydro-Climate Researcher ",
+    "Land Degradation Expert",
+    "Drought Prediction Pioneer",
+    "Climate Intelligence Enthusiast",
+    "Water Security Modeler",
+    "MEXT Scholar • Japan"
+  ];
+  let index = 0;
+  const el = document.getElementById('rotating-title');
+
+  function rotate() {
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = titles[index];
+      el.style.opacity = '1';
+      index = (index + 1) % titles.length;
+    }, 400);
+  }
+
+  rotate();
+  setInterval(rotate, 3000);
+</script>
+  
+</body>
+</html>
